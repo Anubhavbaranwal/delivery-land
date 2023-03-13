@@ -49,6 +49,7 @@ const Login = () => {
           setUser(response);
           setSubmitting(false);
         }}
+        style={{ color: "blue", lineHeight: 10, padding: 20 }}
       >
         {({ isSubmitting }) => (
           <Form className="login-form">
@@ -57,7 +58,6 @@ const Login = () => {
               Login!
             </span>
 
-            <img className="logo" alt="logo" src="../../assets/logo.png" />
             {isSubmitting && <div>Loading...</div>}
             <div className="email">
               <label htmlFor="email" className="email-label">
@@ -75,7 +75,7 @@ const Login = () => {
               <ErrorMessage name="password" component="div" />
             </div>
 
-            <div className="submit">
+            <div className="submit bg-blue-600 w-16">
               <button
                 className="submit-btn"
                 type="submit"

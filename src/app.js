@@ -1,23 +1,36 @@
-import React from "react";
+import React, { lazy, Suspense, useState } from "react";
 import ReactDOM from "react-dom/client";
 import Header from "./components/Header";
 import Body from "./components/Body";
-import AboutUs from "./components/Aboutus";
+import Footer from "./components/Footer";
+// import AboutUs from "./components/Aboutus";
 import Error from "./components/Error";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
-import Contact from "./components/Contact";
+
 import RestaurantMenu from "./components/RestaurantMenu";
 import Login from "./components/login";
 import Profile from "./components/Profile";
+import UserContext from "./components/utils/Usercontext";
+import { Provider } from "react-redux";
+import Store from "./components/utils/Store";
+import Cart from "./components/Cart";
 
-/* Component Composition */
+const Instamart = lazy(() => import("./components/Instamart"));
+const AboutUs = lazy(() => import("./components/Aboutus"));
 
 const AppLayout = () => {
+  const [user, setUser] = useState({
+    name: "Anubhav & utsav ",
+    email: "Anubhavbaranwal08@gmail.com",
+  });
   return (
-    <div>
-      <Header />
-      <Outlet />
-    </div>
+    <Provider store={Store}>
+      <UserContext.Provider value={{ user: user }}>
+        <Header />
+        <Outlet />
+        <Footer />
+      </UserContext.Provider>
+    </Provider>
   );
 };
 const appRouter = createBrowserRouter([
@@ -32,7 +45,11 @@ const appRouter = createBrowserRouter([
       },
       {
         path: "/Aboutus",
-        element: <AboutUs />,
+        element: (
+          <Suspense fallback={<h2>loading the page...</h2>}>
+            <AboutUs />
+          </Suspense>
+        ),
         children: [
           {
             path: "Profile",
@@ -41,8 +58,8 @@ const appRouter = createBrowserRouter([
         ],
       },
       {
-        path: "/Contact",
-        element: <Contact />,
+        path: "/Cart",
+        element: <Cart />,
       },
       {
         path: "/login",
@@ -51,6 +68,14 @@ const appRouter = createBrowserRouter([
       {
         path: "/restaurnt/:resId",
         element: <RestaurantMenu />,
+      },
+      {
+        path: "/instamart",
+        element: (
+          <Suspense fallback={<h1>Loading....</h1>}>
+            <Instamart />
+          </Suspense>
+        ),
       },
     ],
   },

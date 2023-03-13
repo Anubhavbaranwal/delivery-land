@@ -1,10 +1,14 @@
 const Profile = () => {
   return (
-    <div>
-      <h1> name: Anubhav baranwal</h1>
-      <h2>frontend Developer</h2>
+    <div className="font-black flex justify-around">
+      <div>
+        <h1> Anubhav baranwal</h1>
+      </div>
+      <div>
+        <h1> Utsav Upadhaya</h1>
+      </div>
     </div>
   );
 };
 
-export default Profile
+export default Profile;

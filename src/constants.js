@@ -1,5 +1,7 @@
 export const img_cdn_link =
   "https://res.cloudinary.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_508,h_320,c_fill/";
+export const SHIMMER_IMAGE_URL =
+  "https://htmlcolorcodes.com/assets/images/colors/light-gray-color-solid-background-1920x1080.png";
 
 const RestaurantList = [
   {

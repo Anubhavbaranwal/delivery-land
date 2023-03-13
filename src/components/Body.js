@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Shimmer from "./Shimmer";
 import { filterData } from "./utils/Helper";
 import { Link } from "../../node_modules/react-router-dom";
+import useOnline from "./utils/useOnline";
 
 const Body = () => {
   const [allrestaurants, setAllRestaurants] = useState([]);
@@ -22,25 +23,28 @@ const Body = () => {
     setAllRestaurants(json?.data?.cards[2]?.data?.data?.cards);
     setFilteredRestaurants(json?.data?.cards[2]?.data?.data?.cards);
   }
+
+  const isOnline = useOnline();
+  if (!isOnline) {
+    return <h1>⛔Please check your internet Connection </h1>;
+  }
   const handleSubmit = () => {
     console.log(SearchText);
-    // console.log(restaurants);
     const data = filterData(SearchText, allrestaurants);
     setFilteredRestaurants(data);
   };
+
   if (!allrestaurants) return null;
-  // if (filteredrestaurants?.length === 0)
-  //   return <h1>No Restraunt match your Filter!!</h1>;
 
   return allrestaurants.length === 0 ? (
     <Shimmer />
   ) : (
     <>
-      <div className="search-area">
+      <div className="text-center px-2">
         <input
           type="text "
           placeholder="Search"
-          className="Search-text"
+          className="w-80 px-2 m-4 rounded-sm border-2"
           value={SearchText}
           onChange={(e) => {
             setSearchText(e.target.value);
@@ -48,7 +52,7 @@ const Body = () => {
         />
 
         <button
-          className="search-btn"
+          className="bg-yellow-400 rounded w-16"
           onClick={() => handleSubmit()}
           // onClick={handleclick}
         >
@@ -58,7 +62,7 @@ const Body = () => {
       {filteredrestaurants?.length === 0 ? (
         <h1>No Restraunt match your Filter!!</h1>
       ) : (
-        <div className="Restaurant-list">
+        <div className="flex flex-wrap justify-items-center ml-8">
           {filteredrestaurants.map((restaurants) => {
             return (
               <Link

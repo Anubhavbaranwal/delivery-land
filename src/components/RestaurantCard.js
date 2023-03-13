@@ -1,4 +1,6 @@
 import { img_cdn_link } from "../constants";
+import { useContext } from "react";
+import UserContext from "./utils/Usercontext";
 
 const RestaurantCard = ({
   name,
@@ -17,22 +19,27 @@ const RestaurantCard = ({
         : "#48c479",
     color: isNaN(avgRating) ? "#535665" : "#fff",
   };
+  const { user } = useContext(UserContext);
   return (
-    <div className="card">
-      <img className="card-img" src={img_cdn_link + cloudinaryImageId} />
+    <div className="w-56 p-2  m-2  hover:shadow-lg">
+      <img
+        className="border-2 border-yellow-300"
+        src={img_cdn_link + cloudinaryImageId}
+      />
       <div className="card-body">
-        <h6 className="card-title">{name}</h6>
+        <h6 className="font-bold text-xl">{name}</h6>
         <p className="card-tags">{cuisines.join(", ")}</p>
-        <div className="card-details">
-          <div className="rating" style={buttonStyle}>
+        <div className="flex text-sm">
+          <div className="w-8" style={buttonStyle}>
             {/* <AiFillStar /> */}
             <span>{avgRating}</span>
           </div>
-          <div>•</div>
+          <div className="px-1">•</div>
           <div>{slaString}</div>
-          <div>•</div>
+          <div className="px-1">•</div>
           <div>{costForTwoString}</div>
         </div>
+        <div>{user.name}</div>
       </div>
     </div>
   );
